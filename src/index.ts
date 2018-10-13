@@ -10,6 +10,3 @@ app.listen(port, (err) => {
   return console.log(`Server is listening on ${port}`);
 });
 
-process.on('SIGINT', function() {
-  process.exit();
-});
