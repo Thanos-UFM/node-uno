@@ -1,4 +1,7 @@
 module.exports = {
     "extends": "standard",
-    "parser": "typescript-eslint-parser"
+    "parser": "typescript-eslint-parser",
+    "rules":{
+        "no-undef": "off"
+    }
 };

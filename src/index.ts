@@ -1,12 +1,24 @@
 import app from './App'
 
-let port: number = 3000;
+let port: number = 3000
 
 // Levanta servidor node
-app.listen(port, (err) => {
+app.server.listen(port, (err) => {
   if (err) {
-    return console.log(err);
+    console.log(err)
   }
-  return console.log(`Server is listening on ${port}`);
-});
+  console.log(`Servidor esta en puerto ${port}`);
 
+  // Levanta socket
+  app.io.on('connect', (socket: any) => {
+    console.log(`Cliente conectado en puerto ${port}.`);
+
+    socket.on('disconnect', () => {
+      console.log('Cliente desconectado');
+    });
+  })
+})
+
+process.on('SIGINT', function () {
+  process.exit()
+})
