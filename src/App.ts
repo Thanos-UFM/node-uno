@@ -17,7 +17,7 @@ class App {
     // Http Server
     this.server = createServer(this.app)
     // Socket.io Server
-    this.io = socketIo(this.server)    
+    this.io = socketIo(this.server)
   }
 }
 

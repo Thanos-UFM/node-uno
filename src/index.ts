@@ -13,7 +13,11 @@ app.server.listen(port, (err) => {
   app.io.on('connect', (socket: any) => {
     console.log(`Cliente conectado en puerto ${port}.`);
 
-    socket.on('disconnect', () => {
+    socket.on('cardPlayed', (card) =>{
+      console.log(card);
+    })
+
+    socket.on('disconnect', () => {      
       console.log('Cliente desconectado');
     });
   })
