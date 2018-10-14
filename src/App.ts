@@ -8,6 +8,7 @@ class App {
   public app: express.Application;
   public server: Server;
   public io: SocketIO.Server;
+  public games: Array<string> = [];
 
   constructor () {
     // App Express
@@ -18,6 +19,11 @@ class App {
     this.server = createServer(this.app)
     // Socket.io Server
     this.io = socketIo(this.server)
+  }
+
+  public createGame(gameCode: string): void{
+    this.games.push(gameCode)
+    console.log(this.games)
   }
 }
 

@@ -3,15 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <title>Cliente UNO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/client.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
 </head>
 <body>
-  <h1 id="top-card"></h1>
-  <button onclick="playCard('5')">
-    JUGAR CARTA!
-  </button>
-  <ul id="personal-deck"></ul>
+  <div id="login">
+    <p>Codigo de juego: </p>
+    <input type="text">
+    <p>o</p>
+    <button id="btn-create-game">Crear juego</button>
+  </div>
+  <div id="game">
+    <h1 id="game-code"></h1>
+    <h1 class="top-card"></h1>
+  </div>
+  <div id="player" style="display: none;">
+    <h1 class="top-card"></h1>
+    <button onclick="playCard('5')">
+      JUGAR CARTA!
+    </button>
+    <ul id="personal-deck"></ul>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/client.js"></script>
 </body>
 </html>
