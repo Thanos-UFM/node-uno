@@ -7,7 +7,7 @@ app.server.listen(port, (err) => {
   if (err) {
     console.log(err)
   }
-  console.log(`Servidor esta en puerto ${port}`);
+  console.log(`Servidor está en puerto ${port}`);
 
   // Levanta socket
   app.io.on('connect', (socket: any) => {
