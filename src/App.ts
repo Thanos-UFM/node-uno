@@ -10,7 +10,7 @@ class App {
   public server: Server;
   public io: SocketIO.Server;
   
-  private games: Array<string> = [];
+  private games: Array<any> = [];
   private cards: Array<any> = [];
 
   constructor () {
@@ -29,7 +29,9 @@ class App {
 
   fillDeck(){
     // LLenar el deck
+    // Llenar cada color
     for (let c = 0; c < 4; c++){
+      // Llenar cada tipo
       for (let v = 0; v < 14; v++){
         let newCard: card.Card = new card.Card
         newCard.color = c
@@ -41,8 +43,17 @@ class App {
   }
 
   public createGame(gameCode: string): void{
-    this.games.push(gameCode)
+    this.games.push({'gameCode': gameCode, 'players': []})
     console.log(this.games)
+  }
+
+  public joinGame(gameCode: string, player: string): void{
+    this.games.forEach((item, index) => {
+      if (item.gameCode === gameCode){
+        this.games[index].players.push(player)
+      }
+    })
+    console.log(this.games);
   }
 }
 

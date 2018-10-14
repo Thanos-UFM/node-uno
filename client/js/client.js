@@ -1,4 +1,5 @@
 let gameCode
+let userCode
 const game = io()
 
 function createGame () {
@@ -10,8 +11,21 @@ function createGame () {
   document.getElementById('game-code').innerHTML = `Codigo de juego: ${gameCode}`
 }
 
+function joinGame () {
+  while (userCode == null || userCode === '') {
+    userCode = prompt('Nombre/Apodo', (Math.floor(Math.random() * 2176782335)).toString(36))
+  }
+  gameCode = document.getElementById('input-game-code').value
+  game.emit('joinGame', { 'gameCode': gameCode, 'player': userCode })
+}
+
+game.on(gameCode, (data) => {
+  console.log(data)
+})
+
 // Event Listeners
 document.getElementById('btn-create-game').addEventListener('click', createGame)
+document.getElementById('btn-join-game').addEventListener('click', joinGame)
 
 /*
 game.on('servedCards', (cards) => {

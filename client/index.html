@@ -7,14 +7,17 @@
 </head>
 <body>
   <div id="login">
-    <p>Codigo de juego: </p>
-    <input type="text">
+    <p>Codigo para unirse a juego: </p>
+    <input type="text" id="input-game-code">
+    <button id="btn-join-game">Unirse al juego</button>
     <p>o</p>
     <button id="btn-create-game">Crear juego</button>
   </div>
   <div id="game">
     <h1 id="game-code"></h1>
+    <ul id="players"></ul>
     <h1 class="top-card"></h1>
+    <button id="btn-start-game">Iniciar juego</button>
   </div>
   <div id="player" style="display: none;">
     <h1 class="top-card"></h1>
