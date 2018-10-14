@@ -1,8 +1,6 @@
 import { createServer, Server } from 'http'
-import * as card from './Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
-import * as cors from 'cors'
 import * as path from 'path'
 
 class App {
@@ -11,7 +9,7 @@ class App {
   public io: SocketIO.Server;
   
   private games: Array<any> = [];
-  private cards: Array<any> = [];
+  private cards: Array<{color: number, value: number}> = [];
 
   constructor () {
     // App Express
@@ -33,10 +31,7 @@ class App {
     for (let c = 0; c < 4; c++){
       // Llenar cada tipo
       for (let v = 0; v < 14; v++){
-        let newCard: card.Card = new card.Card
-        newCard.color = c
-        newCard.value = v
-
+        let newCard: any = {'color': c, 'value': v}
         this.cards.push(newCard)
       }
     }
@@ -50,10 +45,22 @@ class App {
   public joinGame(gameCode: string, player: string): void{
     this.games.forEach((item, index) => {
       if (item.gameCode === gameCode){
-        this.games[index].players.push(player)
+        this.games[index].players.push({'player': player, 'cards': this.dealCards()})
       }
     })
     console.log(this.games);
+  }
+
+  public dealCards(): Array<any>{
+    let randomCardIndex: number;
+    let randomCards: Array<any> = [];    
+    for (let i = 0; i < 7; i++){
+      randomCardIndex = Math.floor(Math.random()*this.cards.length)
+      randomCards.push(this.cards[randomCardIndex])
+      this.cards.splice(randomCardIndex, 1)
+    }
+    console.log(randomCards.toString())
+    return randomCards
   }
 }
 

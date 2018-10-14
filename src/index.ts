@@ -13,12 +13,18 @@ game.server.listen(port, (err) => {
   game.io.on('connect', (socket: any) => {
     console.log(`Cliente conectado en puerto ${port}.`)
 
+    // Recive el evento createGame
     socket.on('createGame', (data) => {
       game.createGame(data.gameCode)
     })
 
+    // Recive el evento joinGame
     socket.on('joinGame', (data) => {
       game.joinGame(data.gameCode, data.player)
+    })
+
+    socket.on('startGame', (data) => {
+      
     })
 
     socket.on('disconnect', () => {      

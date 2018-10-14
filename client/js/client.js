@@ -9,6 +9,7 @@ function createGame () {
   game.emit('createGame', { 'gameCode': gameCode })
   document.getElementById('login').style.display = 'none'
   document.getElementById('game-code').innerHTML = `Codigo de juego: ${gameCode}`
+  document.getElementById('game').style.display = 'block'
 }
 
 function joinGame () {
@@ -17,6 +18,8 @@ function joinGame () {
   }
   gameCode = document.getElementById('input-game-code').value
   game.emit('joinGame', { 'gameCode': gameCode, 'player': userCode })
+  document.getElementById('login').style.display = 'none'
+  document.getElementById('player').style.display = 'block'
 }
 
 game.on(gameCode, (data) => {
