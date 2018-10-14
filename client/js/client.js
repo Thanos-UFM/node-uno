@@ -9,6 +9,12 @@ function createGame () {
   document.getElementById('login').style.display = 'none'
   document.getElementById('game-code').innerHTML = `Codigo de juego: ${gameCode}`
   document.getElementById('game').style.display = 'block'
+
+  game.on('playerJoined', (data) => {
+    if (data.gameCode === gameCode) {
+      document.getElementById('players').innerHTML += `<li>${data.player}</li>`
+    }
+  })
 }
 
 function joinGame () {
@@ -21,9 +27,30 @@ function joinGame () {
   document.getElementById('player').style.display = 'block'
   document.getElementById('player-id').innerHTML = `Codigo de jugador: ${userCode}`
 
-  console.log(userCode)
   game.on(userCode, (data) => {
+    data.forEach((item, index) => {
+      let color
+      switch (item.color) {
+        case 0:
+          color = 'red'
+          break
+        case 1:
+          color = 'blue'
+          break
+        case 2:
+          color = 'green'
+          break
+        case 3:
+          color = 'yellow'
+          break
+      }
+      document.getElementById('cards').innerHTML += `
+      <li>
+        <button style="background-color: ${color}">${item.value}</button>
+      </li>`
+    })
     console.log(data)
+    // document.getElementById('cards').innerHTML += `<li>${data.player}</li>`
   })
 }
 
@@ -33,10 +60,6 @@ function startGame () {
 
 game.on('test', (msg) => {
   console.log(msg)
-})
-
-game.on(gameCode, (data) => {
-  console.log(data)
 })
 
 // Event Listeners

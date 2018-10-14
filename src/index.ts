@@ -21,6 +21,7 @@ game.server.listen(port, (err) => {
     // Recive el evento joinGame
     socket.on('joinGame', (data) => {
       game.joinGame(data.gameCode, data.player)
+      game.io.emit('playerJoined', data);
     })
 
     socket.on('startGame', (data) => {
@@ -31,7 +32,7 @@ game.server.listen(port, (err) => {
             console.log(item.player);
             console.log(item.cards);
 
-            socket.emit(item.player, item.cards)
+            game.io.emit(item.player, item.cards);
           })
         }
       })

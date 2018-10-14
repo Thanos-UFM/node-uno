@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <title>Cliente UNO</title>
@@ -22,12 +23,10 @@
   <div id="player" style="display: none;">
     <h1 class="top-card"></h1>
     <h2 id="player-id"></h2>
-    <button onclick="playCard('5')">
-      JUGAR CARTA!
-    </button>
+    <ul id="cards"></ul>
     <ul id="personal-deck"></ul>
   </div>
-
+  
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/client.js"></script>
 </body>

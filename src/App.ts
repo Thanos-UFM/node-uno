@@ -32,7 +32,7 @@ class App {
     for (let c = 0; c < 4; c++){
       // Llenar cada tipo
       for (let v = 0; v < 14; v++){
-        let newCard: card.Card = new card.Card
+        let newCard: card.Card = new card.Card        
         newCard.color = c
         newCard.value = v
 
