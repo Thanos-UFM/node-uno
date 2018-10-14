@@ -10,7 +10,7 @@ game.server.listen(port, (err) => {
   console.log(`Servidor está en puerto ${port}`);
 
   // Levanta socket
-  game.io.on('connect', (socket: any) => {
+  game.io.on('connect', (socket: SocketIO.Socket) => {
     console.log(`Cliente conectado en puerto ${port}.`)
 
     // Recive el evento createGame
@@ -24,7 +24,17 @@ game.server.listen(port, (err) => {
     })
 
     socket.on('startGame', (data) => {
-      
+      game.games.forEach( (item, index) => {
+        if (item.gameCode == data.gameCode){
+          game.games[index].players.forEach( (item, index) => {
+            console.log('JUEGO INCIADO!')
+            console.log(item.player);
+            console.log(item.cards);
+
+            socket.emit(item.player, item.cards)
+          })
+        }
+      })
     })
 
     socket.on('disconnect', () => {      

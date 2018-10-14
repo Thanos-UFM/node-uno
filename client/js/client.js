@@ -4,7 +4,6 @@ const game = io()
 
 function createGame () {
   gameCode = (Math.floor(Math.random() * 2176782335)).toString(36)
-  console.log(gameCode)
   // Va a mandar al servidor el evento para crear un nuevo juego con un codigo unico en base 36
   game.emit('createGame', { 'gameCode': gameCode })
   document.getElementById('login').style.display = 'none'
@@ -20,7 +19,21 @@ function joinGame () {
   game.emit('joinGame', { 'gameCode': gameCode, 'player': userCode })
   document.getElementById('login').style.display = 'none'
   document.getElementById('player').style.display = 'block'
+  document.getElementById('player-id').innerHTML = `Codigo de jugador: ${userCode}`
+
+  console.log(userCode)
+  game.on(userCode, (data) => {
+    console.log(data)
+  })
 }
+
+function startGame () {
+  game.emit('startGame', { 'gameCode': gameCode })
+}
+
+game.on('test', (msg) => {
+  console.log(msg)
+})
 
 game.on(gameCode, (data) => {
   console.log(data)
@@ -29,6 +42,7 @@ game.on(gameCode, (data) => {
 // Event Listeners
 document.getElementById('btn-create-game').addEventListener('click', createGame)
 document.getElementById('btn-join-game').addEventListener('click', joinGame)
+document.getElementById('btn-start-game').addEventListener('click', startGame)
 
 /*
 game.on('servedCards', (cards) => {

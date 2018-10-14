@@ -1,4 +1,5 @@
 import { createServer, Server } from 'http'
+import * as card from './Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
@@ -7,9 +8,9 @@ class App {
   public app: express.Application;
   public server: Server;
   public io: SocketIO.Server;
+  public games: Array<any> = [];
   
-  private games: Array<any> = [];
-  private cards: Array<{color: number, value: number}> = [];
+  private cards: Array<any> = [];
 
   constructor () {
     // App Express
@@ -31,7 +32,10 @@ class App {
     for (let c = 0; c < 4; c++){
       // Llenar cada tipo
       for (let v = 0; v < 14; v++){
-        let newCard: any = {'color': c, 'value': v}
+        let newCard: card.Card = new card.Card
+        newCard.color = c
+        newCard.value = v
+
         this.cards.push(newCard)
       }
     }
@@ -59,7 +63,7 @@ class App {
       randomCards.push(this.cards[randomCardIndex])
       this.cards.splice(randomCardIndex, 1)
     }
-    console.log(randomCards.toString())
+    console.log(randomCards)
     return randomCards
   }
 }
