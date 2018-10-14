@@ -1,4 +1,5 @@
 import { createServer, Server } from 'http'
+import * as card from './Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as cors from 'cors'
@@ -8,7 +9,9 @@ class App {
   public app: express.Application;
   public server: Server;
   public io: SocketIO.Server;
-  public games: Array<string> = [];
+  
+  private games: Array<string> = [];
+  private cards: Array<any> = [];
 
   constructor () {
     // App Express
@@ -19,6 +22,22 @@ class App {
     this.server = createServer(this.app)
     // Socket.io Server
     this.io = socketIo(this.server)
+
+    //Llenar deck
+    this.fillDeck()
+  }
+
+  fillDeck(){
+    // LLenar el deck
+    for (let c = 0; c < 4; c++){
+      for (let v = 0; v < 14; v++){
+        let newCard: card.Card = new card.Card
+        newCard.color = c
+        newCard.value = v
+
+        this.cards.push(newCard)
+      }
+    }
   }
 
   public createGame(gameCode: string): void{
