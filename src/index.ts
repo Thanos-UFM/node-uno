@@ -29,9 +29,6 @@ game.server.listen(port, (err) => {
         if (item.gameCode == data.gameCode){
           game.games[index].players.forEach( (item, index) => {
             console.log('JUEGO INCIADO!')
-            console.log(item.player);
-            console.log(item.cards);
-
             game.io.emit(item.player, item.cards);
           })
         }

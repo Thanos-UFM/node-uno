@@ -43,10 +43,13 @@ function joinGame () {
         case 3:
           color = 'yellow'
           break
+        case 4:
+          color = 'black'
+          break
       }
       document.getElementById('cards').innerHTML += `
       <li>
-        <button style="background-color: ${color}">${item.value}</button>
+        <button onclick="playCard(${item.value}, ${item.color})" class="card" style="background-color: ${color}; color: white">${item.value}</button>
       </li>`
     })
     console.log(data)
@@ -58,21 +61,13 @@ function startGame () {
   game.emit('startGame', { 'gameCode': gameCode })
 }
 
-game.on('test', (msg) => {
-  console.log(msg)
-})
+function playCard (cardValue, cardColor) {
+  const card = { color: cardColor, value: cardValue }
+  console.log('carta jugada', card)
+  // game.emit('cardPlayed', card)
+}
 
 // Event Listeners
 document.getElementById('btn-create-game').addEventListener('click', createGame)
 document.getElementById('btn-join-game').addEventListener('click', joinGame)
 document.getElementById('btn-start-game').addEventListener('click', startGame)
-
-/*
-game.on('servedCards', (cards) => {
-  console.log(cards)
-})
-
-function playCard (card) {
-  console.log(`carta jugada ${card}`)
-  game.emit('cardPlayed', card)
-} */

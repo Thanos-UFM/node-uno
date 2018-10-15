@@ -11,6 +11,7 @@ class App {
   public games: Array<any> = [];
   
   private cards: Array<any> = [];
+  private turn: number;
 
   constructor () {
     // App Express
@@ -35,6 +36,9 @@ class App {
         let newCard: card.Card = new card.Card        
         newCard.color = c
         newCard.value = v
+        if (v > 11){
+          newCard.color = 4
+        }
 
         this.cards.push(newCard)
       }
@@ -65,6 +69,10 @@ class App {
     }
     console.log(randomCards)
     return randomCards
+  }
+
+  public getTurn(){
+    
   }
 }
 
