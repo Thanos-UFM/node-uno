@@ -6,7 +6,8 @@ export enum Color {
   red,
   blue,
   green,
-  yellow  
+  yellow,
+  black
 }
 export enum Value {
   // numbers

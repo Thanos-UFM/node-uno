@@ -11,6 +11,7 @@ class App {
   public games: Array<any> = [];
   
   private cards: Array<any> = [];
+  private turn: number;
 
   constructor () {
     // App Express
@@ -35,20 +36,27 @@ class App {
         let newCard: card.Card = new card.Card        
         newCard.color = c
         newCard.value = v
+        if (v > 11){
+          newCard.color = 4
+        }
 
         this.cards.push(newCard)
       }
     }
   }
 
+  // Esta funcion crea un nuevo juego
   public createGame(gameCode: string): void{
+    // Empuja un nuevo juego al arreglo de juegos
     this.games.push({'gameCode': gameCode, 'players': []})
     console.log(this.games)
   }
 
   public joinGame(gameCode: string, player: string): void{
+    // Union de un nuevo jugador
     this.games.forEach((item, index) => {
       if (item.gameCode === gameCode){
+        // Empujar un nuevo jugador al juego que quiere unirse
         this.games[index].players.push({'player': player, 'cards': this.dealCards()})
       }
     })
@@ -56,15 +64,23 @@ class App {
   }
 
   public dealCards(): Array<any>{
+    // Retorna un arreglo de 7 cartas y las quita del maso
     let randomCardIndex: number;
-    let randomCards: Array<any> = [];    
+    let randomCards: Array<any> = [];
     for (let i = 0; i < 7; i++){
+      // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
+      // Empujo la carta con el indice del numero aleatorio
       randomCards.push(this.cards[randomCardIndex])
+      // Quitar la carta sellecionada del maso
       this.cards.splice(randomCardIndex, 1)
     }
-    console.log(randomCards)
+    // Retornar las 7 cartas seleccionadas de forma aleatoria
     return randomCards
+  }
+
+  public getTurn(){
+    
   }
 }
 
