@@ -1,10 +1,10 @@
 {
   "name": "uno",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Simple UNO card game",
   "main": "src/index.js",
   "scripts": {
-    "test": "node index.js",
+    "test": "node src/index.js",
     "start": "npm run build:live",
     "build": "tsc",
     "build:live": "nodemon --exec ts-node src/index.ts"

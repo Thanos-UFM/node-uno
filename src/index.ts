@@ -11,19 +11,22 @@ game.server.listen(port, (err) => {
 
   // Levanta socket
   game.io.on('connect', (socket: SocketIO.Socket) => {
-    console.log(`Cliente conectado en puerto ${port}.`)
+    let handshake = socket.handshake;
+    console.log(`Nuevo cliente en ${handshake.address}`);
+    //console.log(`Cliente conectado en puerto ${port}.`)
 
-    // Recive el evento createGame
+    // Recibe el evento createGame
     socket.on('createGame', (data) => {
       game.createGame(data.gameCode)
     })
 
-    // Recive el evento joinGame
+    // Recibe el evento joinGame
     socket.on('joinGame', (data) => {
       game.joinGame(data.gameCode, data.player)
       game.io.emit('playerJoined', data);
     })
 
+    // Recibe el evento startGame
     socket.on('startGame', (data) => {
       game.games.forEach( (item, index) => {
         if (item.gameCode == data.gameCode){
