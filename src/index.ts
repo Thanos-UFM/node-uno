@@ -12,7 +12,7 @@ game.server.listen(port, (err) => {
   // Levanta socket
   game.io.on('connect', (socket: SocketIO.Socket) => {
     let handshake = socket.handshake;
-    console.log(`Nuevo cliente en ${handshake.address}`);
+    console.log(`Nuevo cliente, ${handshake.address}`);
     //console.log(`Cliente conectado en puerto ${port}.`)
 
     // Recibe el evento createGame
@@ -38,8 +38,8 @@ game.server.listen(port, (err) => {
       })
     })
 
-    socket.on('disconnect', () => {      
-      console.log('Cliente desconectado');
+    socket.on('disconnect', (data) => {
+      console.log(`Cliente desconectado, ${handshake.address}`);
     })
   })
 })

@@ -3,14 +3,17 @@ import * as card from './Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
+import { json } from 'body-parser';
 
 class App {
+  // Variables publicas
   public app: express.Application;
   public server: Server;
   public io: SocketIO.Server;
-  public games: Array<any> = [];
-  
-  private cards: Array<any> = [];
+  public games: Array<{gameCode: string, players: any}> = [];
+  public cards: Array<any> = [];
+
+  // Variables privadas  
   private turn: number;
 
   constructor () {
@@ -27,7 +30,7 @@ class App {
     this.fillDeck()
   }
 
-  fillDeck(){
+  fillDeck(): Array<any>{
     // LLenar el deck
     // Llenar cada color
     for (let c = 0; c < 4; c++){
@@ -43,24 +46,29 @@ class App {
         this.cards.push(newCard)
       }
     }
+    return this.cards
   }
 
   // Esta funcion crea un nuevo juego
-  public createGame(gameCode: string): void{
+  public createGame(gameCode: string): Array<{gameCode: string, players: any}>{
     // Empuja un nuevo juego al arreglo de juegos
     this.games.push({'gameCode': gameCode, 'players': []})
     console.log(this.games)
+    return this.games
   }
 
-  public joinGame(gameCode: string, player: string): void{
+  public joinGame(gameCode: string, player: string): Array<{gameCode: string, players: any}> | boolean{
     // Union de un nuevo jugador
+    let result: any = false
     this.games.forEach((item, index) => {
       if (item.gameCode === gameCode){
         // Empujar un nuevo jugador al juego que quiere unirse
         this.games[index].players.push({'player': player, 'cards': this.dealCards()})
+        console.log(this.games)
+        result = this.games
       }
-    })
-    console.log(this.games);
+    })  
+    return result
   }
 
   public dealCards(): Array<any>{
