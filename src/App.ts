@@ -3,7 +3,6 @@ import * as card from './Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
-import { json } from 'body-parser';
 
 class App {
   // Variables publicas
