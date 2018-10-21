@@ -1,6 +1,6 @@
 import { createServer, Server } from 'http'
-import * as card from './Card'
-import { Game } from './Game'
+import { Game } from './components/Game'
+import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
@@ -11,7 +11,7 @@ class App {
   public server: Server;
   public io: SocketIO.Server;
   public games: Array<Game> = [];
-  public cards: Array<any> = [];
+  public cards: Array<Card> = [];
 
   // Variables privadas  
   private turn: number;
@@ -36,7 +36,7 @@ class App {
     for (let c = 0; c < 4; c++){
       // Llenar cada tipo
       for (let v = 0; v < 14; v++){
-        let newCard: card.Card = new card.Card        
+        let newCard: Card = new Card        
         newCard.color = c
         newCard.value = v
         if (v > 11){
@@ -71,7 +71,7 @@ class App {
     return result
   }
 
-  public dealCards(cardsToDeal: number = 7): Array<card.Card>{
+  public dealCards(cardsToDeal: number = 7): Array<Card>{
     // Retorna un arreglo de 7 cartas y las quita del maso
     let randomCardIndex: number;
     let randomCards: Array<any> = [];

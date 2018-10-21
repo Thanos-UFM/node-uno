@@ -37,7 +37,9 @@ game.server.listen(port, (err) => {
       })
     })
     
-    //socket.on('')
+    socket.on('cardPlayed', (data) => {
+      
+    })
 
     socket.on('disconnect', (data) => {
       console.log(`Cliente desconectado, ${handshake.address}`);
