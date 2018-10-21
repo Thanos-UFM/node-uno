@@ -1,5 +1,6 @@
 import { createServer, Server } from 'http'
 import * as card from './Card'
+import { Game } from './Game'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
@@ -9,7 +10,7 @@ class App {
   public app: express.Application;
   public server: Server;
   public io: SocketIO.Server;
-  public games: Array<{gameCode: string, players: any, topCard: card.Card}> = [];
+  public games: Array<Game> = [];
   public cards: Array<any> = [];
 
   // Variables privadas  
@@ -49,14 +50,14 @@ class App {
   }
 
   // Esta funcion crea un nuevo juego
-  public createGame(gameCode: string): Array<{gameCode: string, players: any, topCard: card.Card}>{
+  public createGame(gameCode: string): Array<Game>{
     // Empuja un nuevo juego al arreglo de juegos
     this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0]})
     console.log(this.games)
     return this.games
   }
 
-  public joinGame(gameCode: string, player: string): Array<{gameCode: string, players: any, topCard: card.Card}> | boolean{
+  public joinGame(gameCode: string, player: string): Array<Game> | boolean{
     // Union de un nuevo jugador
     let result: any = false
     this.games.forEach((item, index) => {
@@ -66,7 +67,7 @@ class App {
         console.log(this.games)
         result = this.games
       }
-    })  
+    })
     return result
   }
 
