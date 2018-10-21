@@ -31,12 +31,13 @@ game.server.listen(port, (err) => {
       game.games.forEach( (item, index) => {
         if (item.gameCode == data.gameCode){
           game.games[index].players.forEach( (item, index) => {
-            console.log('JUEGO INCIADO!')
             game.io.emit(item.player, item.cards);
           })
         }
       })
     })
+    
+    //socket.on('')
 
     socket.on('disconnect', (data) => {
       console.log(`Cliente desconectado, ${handshake.address}`);
