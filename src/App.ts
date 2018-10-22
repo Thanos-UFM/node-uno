@@ -1,5 +1,6 @@
 import { createServer, Server } from 'http'
-import * as card from './Card'
+import { Game } from './components/Game'
+import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
@@ -9,8 +10,8 @@ class App {
   public app: express.Application;
   public server: Server;
   public io: SocketIO.Server;
-  public games: Array<{gameCode: string, players: any}> = [];
-  public cards: Array<any> = [];
+  public games: Array<Game> = [];
+  public cards: Array<Card> = [];
 
   // Variables privadas  
   private turn: number;
@@ -35,7 +36,7 @@ class App {
     for (let c = 0; c < 4; c++){
       // Llenar cada tipo
       for (let v = 0; v < 14; v++){
-        let newCard: card.Card = new card.Card        
+        let newCard: Card = new Card        
         newCard.color = c
         newCard.value = v
         if (v > 11){
@@ -49,32 +50,32 @@ class App {
   }
 
   // Esta funcion crea un nuevo juego
-  public createGame(gameCode: string): Array<{gameCode: string, players: any}>{
+  public createGame(gameCode: string): Array<Game>{
     // Empuja un nuevo juego al arreglo de juegos
-    this.games.push({'gameCode': gameCode, 'players': []})
+    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0]})
     console.log(this.games)
     return this.games
   }
 
-  public joinGame(gameCode: string, player: string): Array<{gameCode: string, players: any}> | boolean{
+  public joinGame(gameCode: string, player: string): Array<Game> | boolean{
     // Union de un nuevo jugador
     let result: any = false
     this.games.forEach((item, index) => {
       if (item.gameCode === gameCode){
         // Empujar un nuevo jugador al juego que quiere unirse
-        this.games[index].players.push({'player': player, 'cards': this.dealCards()})
+        this.games[index].players.push({'id': player, 'nickname': player, 'cards': this.dealCards()})
         console.log(this.games)
         result = this.games
       }
-    })  
+    })
     return result
   }
 
-  public dealCards(): Array<any>{
+  public dealCards(cardsToDeal: number = 7): Array<Card>{
     // Retorna un arreglo de 7 cartas y las quita del maso
     let randomCardIndex: number;
     let randomCards: Array<any> = [];
-    for (let i = 0; i < 7; i++){
+    for (let i = 0; i < cardsToDeal; i++){
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
       // Empujo la carta con el indice del numero aleatorio
@@ -86,7 +87,7 @@ class App {
     return randomCards
   }
 
-  public getTurn(){
+  public playCard(){
     
   }
 }

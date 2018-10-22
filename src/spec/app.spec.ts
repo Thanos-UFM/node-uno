@@ -31,7 +31,8 @@ describe('Repartir cartas', () => {
 describe('Crear partida y unir jugador', () =>{
   it('Deberia crear una nueva partida con el codigo "1"', () => {    
     const result = game.createGame('1')
-    expect(JSON.stringify(result)).to.equal('[{"gameCode":"1","players":[]}]')
+    expect(result).to.be.an('array').of.length(1)
+    expect(result[0].gameCode).to.equal('1')
   })
 
   it('Deberia unirse a partida con codigo "1" y con el jugador "a"', () =>{

@@ -53,7 +53,6 @@ function joinGame () {
       </li>`
     })
     console.log(data)
-    // document.getElementById('cards').innerHTML += `<li>${data.player}</li>`
   })
 }
 
@@ -64,7 +63,7 @@ function startGame () {
 function playCard (cardValue, cardColor) {
   const card = { color: cardColor, value: cardValue }
   console.log('carta jugada', card)
-  // game.emit('cardPlayed', card)
+  game.emit('cardPlayed', { 'gameCode': gameCode, 'card': card, 'player': userCode })
 }
 
 // Event Listeners

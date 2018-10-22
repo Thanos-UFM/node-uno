@@ -1,4 +1,6 @@
-# UNO Node [![Build Status](https://travis-ci.com/Thanos-UFM/node-uno.svg?branch=master)](https://travis-ci.com/Thanos-UFM/node-uno)
+# UNO Node 
+Master: [![Build Status](https://travis-ci.com/Thanos-UFM/node-uno.svg?branch=master)](https://travis-ci.com/Thanos-UFM/node-uno)  
+Backend: [![Build Status](https://travis-ci.com/Thanos-UFM/node-uno.svg?branch=backend)](https://travis-ci.com/Thanos-UFM/node-uno)  
 ## Inicio
 
 ### Prerequisitos
