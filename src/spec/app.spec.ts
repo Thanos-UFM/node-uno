@@ -38,6 +38,6 @@ describe('Crear partida y unir jugador', () =>{
   it('Deberia unirse a partida con codigo "1" y con el jugador "a"', () =>{
     const result = game.joinGame('1', 'a')
     expect(result).to.be.an('array').of.length(1)
-    expect(result[0].players[0].player).equal('a')
+    expect(result[0].players[0].id).equal('a')
   })
 })
