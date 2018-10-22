@@ -10,12 +10,9 @@ describe('Llenar deck', () => {
 })
 
 describe('Repartir cartas', () => {
-  it('Deberia retornar un arreglo de 7 cartas', () =>{
+  it('Retornar un arreglo de 7 cartas y quitar esas 7 cartas del deck', () =>{
     const result = game.dealCards()
-    expect(result).to.be.an('array').of.length(7)    
-  })
-  it('Deberia quitar esas 7 cartas del deck', () =>{
-    const result = game.dealCards()
+    expect(result).to.be.an('array').of.length(7)
     let rep: number = 0;
     for (let i = 0; i < game.cards.length; i++){
       for (let n = 0; n < 7; n++){
