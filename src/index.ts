@@ -31,14 +31,14 @@ game.server.listen(port, (err) => {
       game.games.forEach( (item, index) => {
         if (item.gameCode == data.gameCode){
           game.games[index].players.forEach( (item, index) => {
-            game.io.emit(item.player, item.cards);
+            game.io.emit(item.nickname, item.cards);
           })
         }
       })
     })
     
     socket.on('cardPlayed', (data) => {
-      
+
     })
 
     socket.on('disconnect', (data) => {

@@ -63,7 +63,7 @@ class App {
     this.games.forEach((item, index) => {
       if (item.gameCode === gameCode){
         // Empujar un nuevo jugador al juego que quiere unirse
-        this.games[index].players.push({'player': player, 'cards': this.dealCards()})
+        this.games[index].players.push({'id': player, 'nickname': player, 'cards': this.dealCards()})
         console.log(this.games)
         result = this.games
       }

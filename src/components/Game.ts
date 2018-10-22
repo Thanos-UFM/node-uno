@@ -1,6 +1,7 @@
 import { Card } from './Card'
+import { Player } from './Player'
 export class Game {
   gameCode: string;
-  players: Array<{player: string, cards: Array<Card>}>;
+  players: Array<Player>;
   topCard: Card;
 }
