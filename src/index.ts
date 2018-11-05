@@ -1,9 +1,9 @@
 import game from './App'
 
-let port: number = 3000
+const port: any = process.env.PORT || 3000
 
 // Levanta servidor node
-game.server.listen(port, (err) => {
+game.server.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.log(err)
   }
@@ -13,7 +13,6 @@ game.server.listen(port, (err) => {
   game.io.on('connect', (socket: SocketIO.Socket) => {
     let handshake = socket.handshake;
     console.log(`Nuevo cliente, ${handshake.address}`);
-    //console.log(`Cliente conectado en puerto ${port}.`)
 
     // Recibe el evento createGame
     socket.on('createGame', (data) => {
@@ -27,14 +26,6 @@ game.server.listen(port, (err) => {
 
     // Recibe el evento startGame
     socket.on('startGame', (data) => {
-      /*game.games.forEach( (item, index) => {
-        if (item.gameCode == data.gameCode){
-          game.games[index].players.forEach( (item, index) => {
-            game.io.emit(item.nickname, item.cards);
-          })
-        }
-      })*/
-
       console.log("-------GAME STARTED------")
       console.log(data)
     })
