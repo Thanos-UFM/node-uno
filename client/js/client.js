@@ -13,6 +13,9 @@ function createGame () {
 
   game.on('playerJoined', (data) => {
     console.log(data)
+    if (data.players.length > 1) {
+      document.getElementById('btn-start-game').style.display = 'initial'
+    }
     document.getElementById('players').innerHTML = ''
     if (data.gameCode === gameCode) {
       data.players.forEach((item, index) => {
@@ -31,44 +34,44 @@ function joinGame () {
 
   game.on('playerJoined', (data) => {
     console.log(data)
-    if (data.gameCode === gameCode) {
-      document.getElementById('login').style.display = 'none'
-      document.getElementById('player').style.display = 'block'
-      document.getElementById('player-id').innerHTML = `Jugador: ${userCode}`
+    if (joined === false) {
+      if (data.gameCode === gameCode) {
+        document.getElementById('login').style.display = 'none'
+        document.getElementById('player').style.display = 'block'
+        document.getElementById('player-id').innerHTML = `Jugador: ${userCode}`
 
-      joined = true
+        joined = true
 
-      data.players.forEach((player, ind) => {
-        if (player.nickname === userCode) {
-          player.cards.forEach((card, index) => {
-            let color
-            switch (card.color) {
-              case 0:
-                color = 'red'
-                break
-              case 1:
-                color = 'blue'
-                break
-              case 2:
-                color = 'green'
-                break
-              case 3:
-                color = 'yellow'
-                break
-              case 4:
-                color = 'black'
-                break
-            }
-            document.getElementById('cards').innerHTML += `
-            <li>
-              <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}">${card.value}</button>
-            </li>`
-          })
-        }
-      })
-    } else if (!data) {
-      console.log(data)
-      if (joined === false) {
+        data.players.forEach((player, ind) => {
+          if (player.nickname === userCode) {
+            player.cards.forEach((card, index) => {
+              let color
+              switch (card.color) {
+                case 0:
+                  color = 'red'
+                  break
+                case 1:
+                  color = 'blue'
+                  break
+                case 2:
+                  color = 'green'
+                  break
+                case 3:
+                  color = 'yellow'
+                  break
+                case 4:
+                  color = 'black'
+                  break
+              }
+              document.getElementById('cards').innerHTML += `
+              <li>
+                <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}">${card.value}</button>
+              </li>`
+            })
+          }
+        })
+      } else if (!data) {
+        console.log(data)
         alert('Juego no exite')
       }
     }

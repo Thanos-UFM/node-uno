@@ -28,6 +28,10 @@ body{
   }
 }
 
+#btn-start-game{
+  display: none;
+}
+
 #players{
   list-style-type: none;
   padding: 0;
