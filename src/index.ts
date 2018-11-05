@@ -1,6 +1,6 @@
 import game from './App'
 
-let port: any = 3000 || process.env.PORT
+let port: any = process.env.PORT || 3000
 
 // Levanta servidor node
 game.server.listen(port, (err) => {
