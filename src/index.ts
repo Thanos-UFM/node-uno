@@ -27,14 +27,6 @@ game.server.listen(port, (err) => {
 
     // Recibe el evento startGame
     socket.on('startGame', (data) => {
-      /*game.games.forEach( (item, index) => {
-        if (item.gameCode == data.gameCode){
-          game.games[index].players.forEach( (item, index) => {
-            game.io.emit(item.nickname, item.cards);
-          })
-        }
-      })*/
-
       console.log("-------GAME STARTED------")
       console.log(data)
     })

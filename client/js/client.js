@@ -1,5 +1,6 @@
 let gameCode
 let userCode
+let joined = false
 const game = io()
 
 function createGame () {
@@ -35,6 +36,8 @@ function joinGame () {
       document.getElementById('player').style.display = 'block'
       document.getElementById('player-id').innerHTML = `Jugador: ${userCode}`
 
+      joined = true
+
       data.players.forEach((player, ind) => {
         if (player.nickname === userCode) {
           player.cards.forEach((card, index) => {
@@ -63,8 +66,11 @@ function joinGame () {
           })
         }
       })
-    } else {
-      alert('Juego no exite')
+    } else if (!data) {
+      console.log(data)
+      if (joined === false) {
+        alert('Juego no exite')
+      }
     }
   })
 }
