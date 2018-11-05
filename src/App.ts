@@ -72,10 +72,13 @@ class App {
           }
         })
 
+        let cards: Array<Card>
         if (rep == false){
-          // Empujar un nuevo jugador al juego que quiere unirse
-          this.games[index].players.push({'id': ip, 'nickname': player, 'cards': this.dealCards()})
+          cards = this.dealCards();
+          // Empujar un nuevo jugador al juego que quiere unirse          
+          this.games[index].players.push({'id': ip, 'nickname': player, 'cards': cards})
         }
+        this.io.emit(player, cards);
         console.log(this.games[index])
         result = this.games[index]
       }

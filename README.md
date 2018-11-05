@@ -7,8 +7,8 @@ Backend: [![Build Status](https://travis-ci.com/Thanos-UFM/node-uno.svg?branch=b
 Para poder correr el juego es necesario tener instalado [NodeJS](https://nodejs.org/en/).
 Una vez descargado e instalado NodeJS verficar que está instalado con 
 ```bash
-$ npm -v
-$ node -v
+npm -v
+node -v
 ```
 Si ambas lineas imprimen la version de npm y node entonces ambos fueron instalados instalados correctamente.
 
@@ -17,15 +17,15 @@ Para poder clonar el proyecto en su computadora es necesario tener [git](https:/
 ### Clonar proyecto
 Navegar en consola al directorio donde quieran clonar el proyecto y correr las siguientes lineas:
 ```bash
-$ git clone https://github.com/Thanos-UFM/node-uno.git
-$ cd node-uno
+git clone https://github.com/Thanos-UFM/node-uno.git
+cd node-uno
 ```
 
 ### Correr
 Antes de correr el programa es necesario instalar todas las dependencias, con `npm` esto es super sencillo (npm maneja todas las dependecias).
 Para instalar las dependencias correr esta linea dentro del directorio del repositorio
 ```bash
-$ npm install
+npm install
 ```
 Cuando terminen de descargar e instalar las dependecias ya se pueden levantar el programa. Hay dos formas de correr el programa:  
 1. **Compilar y correr**  

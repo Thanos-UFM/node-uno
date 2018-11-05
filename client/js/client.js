@@ -34,32 +34,34 @@ function joinGame () {
       document.getElementById('login').style.display = 'none'
       document.getElementById('player').style.display = 'block'
       document.getElementById('player-id').innerHTML = `Jugador: ${userCode}`
-      game.on(userCode, (data) => {
-        data.forEach((item, index) => {
-          let color
-          switch (item.color) {
-            case 0:
-              color = '#FF5555'
-              break
-            case 1:
-              color = '#5555FF'
-              break
-            case 2:
-              color = '#55AA55'
-              break
-            case 3:
-              color = '#FFAA00'
-              break
-            case 4:
-              color = 'black'
-              break
-          }
-          document.getElementById('cards').innerHTML += `
-          <li>
-            <button onclick="playCard(${item.value}, ${item.color})" class="card" style="background-color: ${color}; color: white">${item.value}</button>
-          </li>`
-        })
-        console.log(data)
+
+      data.players.forEach((player, ind) => {
+        if (player.nickname === userCode) {
+          player.cards.forEach((card, index) => {
+            let color
+            switch (card.color) {
+              case 0:
+                color = 'red'
+                break
+              case 1:
+                color = 'blue'
+                break
+              case 2:
+                color = 'green'
+                break
+              case 3:
+                color = 'yellow'
+                break
+              case 4:
+                color = 'black'
+                break
+            }
+            document.getElementById('cards').innerHTML += `
+            <li>
+              <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}">${card.value}</button>
+            </li>`
+          })
+        }
       })
     } else {
       alert('Juego no exite')
