@@ -103,6 +103,7 @@ input{
   transition: all .3s;
 }
 input:focus {
-  border: solid 2px #5555ff8e;
+  box-shadow: 0 0 0 2px #5555ff8e;
+  border: solid 1px transparent;
   outline:0;
 }
