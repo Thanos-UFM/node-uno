@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const App_1 = require("./App");
-let port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 // Levanta servidor node
 App_1.default.server.listen(port, (err) => {
     if (err) {
@@ -12,7 +12,6 @@ App_1.default.server.listen(port, (err) => {
     App_1.default.io.on('connect', (socket) => {
         let handshake = socket.handshake;
         console.log(`Nuevo cliente, ${handshake.address}`);
-        //console.log(`Cliente conectado en puerto ${port}.`)
         // Recibe el evento createGame
         socket.on('createGame', (data) => {
             App_1.default.createGame(data.gameCode);
