@@ -6,30 +6,40 @@
 body{
   font-family: 'Montserrat Regular', sans-serif;
   background-color: #FFAA00;
+  text-align: center;
 }
 
 .content{
   display: none;
   background-color: white;
+  position: absolute;
   width: 600px;
-  margin: auto;
+  top:50%;
+  left: 50%;
+  transform: translateY(-65%) translateX(-50%);
   text-align: center;
   padding: 20px 0 20px 0;  
   border-radius: 20px;
-  box-shadow: 2px 2px 20px 1px rgba(0,0,0,.1), -2px 2px 20px 1px rgba(0,0,0,.1);
+  box-shadow: 2px 2px 20px 1px rgba(0,0,0,.1), -2px 2px 20px 1px rgba(0,0,0,.1);  
 }
 
 @media screen and (max-width: 600px){
   .content{
-    width: 100%;
+    width: calc(100% - 30px);
   }
+}
+
+#btn-start-game{
+  display: none;
 }
 
 #players{
   list-style-type: none;
+  padding: 0;
 }
 
 #cards{
+  padding: 0;
   list-style-type: none;
 }
 #cards li{
@@ -98,6 +108,7 @@ input{
   transition: all .3s;
 }
 input:focus {
-  border: solid 2px #5555ff8e;
+  box-shadow: 0 0 0 2px rgba(85, 85, 255, 0.557);
+  border: solid 1px transparent;
   outline:0;
 }
