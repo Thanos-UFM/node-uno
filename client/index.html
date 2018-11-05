@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8" />
   <title>Cliente UNO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'/>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
   <h1 id="top-card"></h1>
   <h2 id="turn"></h2>
-  <div id="login">
+  <div class="content" id="login" style="display: block;">
     <p>Codigo para unirse a juego: </p>
     <input type="text" id="input-game-code">
     <button id="btn-join-game">Unirse al juego</button>
     <p>o</p>
     <button id="btn-create-game">Crear juego</button>
   </div>
-  <div id="game" style="display: none;">
+  <div class="content" id="game" >
     <h1 id="game-code"></h1>
     <ul id="players"></ul>    
     <button id="btn-start-game">Iniciar juego</button>
   </div>
-  <div id="player" style="display: none;">
+  <div class="content" id="player">
     <h2 id="player-id"></h2>
     <ul id="cards"></ul>
     <ul id="personal-deck"></ul>

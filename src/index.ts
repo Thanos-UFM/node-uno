@@ -21,9 +21,8 @@ game.server.listen(port, (err) => {
     })
 
     // Recibe el evento joinGame
-    socket.on('joinGame', (data) => {
-      game.joinGame(data.gameCode, data.player)
-      game.io.emit('playerJoined', data);
+    socket.on('joinGame', (data) => {      
+      game.io.emit('playerJoined', game.joinGame(data.gameCode, data.player, handshake.address))
     })
 
     // Recibe el evento startGame

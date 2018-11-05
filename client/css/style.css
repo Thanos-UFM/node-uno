@@ -1,0 +1,42 @@
+@font-face{
+  font-family: 'Montserrat Regular';
+  src: url('font/Montserrat-Regular.otf');
+}
+
+body{
+  font-family: 'Montserrat Regular', sans-serif;
+  background-color: #FFAA00;
+}
+
+.content{
+  display: none;
+  background-color: white;
+  width: 600px;
+  margin: auto;
+  text-align: center;
+  padding: 20px 0 20px 0;  
+  border-radius: 20px;
+  box-shadow: 2px 2px 20px 1px rgba(0,0,0,.1), -2px 2px 20px 1px rgba(0,0,0,.1);
+}
+
+@media screen and (max-width: 600px){
+  .content{
+    width: 100%;
+  }
+}
+
+#cards{
+  list-style-type: none;
+}
+#cards li{
+  display: inline
+}
+
+.card{
+  padding: 25px 10px 25px 10px;
+  font-size: large;
+  font-family: 'Montserrat Regular', sans-serif;
+  border: none;
+  font-weight: 800;
+  border-radius: 10px;
+}
