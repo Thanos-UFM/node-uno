@@ -1,6 +1,7 @@
 import game from '../App'
 import { expect } from 'chai'
 import 'mocha'
+import { Game } from '../components/Game';
 
 describe('Llenar deck', () => {
   it('Deberia retornar deck completo de cartas de uno', () => {
@@ -35,9 +36,8 @@ describe('Crear partida y unir jugador', () =>{
     expect(result[0].gameCode).to.equal('1')
   })
 
-  it('Deberia unirse a partida con codigo "1" y con el jugador "a"', () =>{
-    const result = game.joinGame('1', 'a')
-    expect(result).to.be.an('array').of.length(1)
-    expect(result[0].players[0].id).equal('a')
+  it('Deberia de no responder false la union', () =>{
+    const result = game.joinGame('1', 'a', '::1')
+    expect(result).to.not.be.an('boolean')
   })
 })

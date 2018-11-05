@@ -7,20 +7,20 @@ import * as path from 'path'
 
 class App {
   // Variables publicas
-  public app: express.Application;
-  public server: Server;
-  public io: SocketIO.Server;
-  public games: Array<Game> = [];
-  public cards: Array<Card> = [];
+  public app: express.Application
+  public server: Server
+  public io: SocketIO.Server
+  public games: Array<Game> = []
+  public cards: Array<Card> = []
 
   // Variables privadas  
-  private turn: number;
+  private turn: number
 
   constructor () {
     // App Express
     this.app = express()
     // Carga los archivos estaticos del directorio 'client'
-    this.app.use(express.static(path.resolve(__dirname, '../client')));
+    this.app.use(express.static(path.resolve(__dirname, '../client')))
     // Http Server
     this.server = createServer(this.app)
     // Socket.io Server
@@ -57,15 +57,27 @@ class App {
     return this.games
   }
 
-  public joinGame(gameCode: string, player: string): Array<Game> | boolean{
+  public joinGame(gameCode: string, player: string, ip: string): Game | boolean{
     // Union de un nuevo jugador
     let result: any = false
     this.games.forEach((item, index) => {
+      // Verificar que la misma IP no esta repetida
+      let rep: boolean = false
       if (item.gameCode === gameCode){
-        // Empujar un nuevo jugador al juego que quiere unirse
-        this.games[index].players.push({'id': player, 'nickname': player, 'cards': this.dealCards()})
-        console.log(this.games)
-        result = this.games
+        // Si la ip ya esta en el juego solo cambiar su nickname
+        this.games[index].players.forEach((item, index) => {
+          if (item.id == ip){
+            rep = true
+            item.nickname = player            
+          }
+        })
+
+        if (rep == false){
+          // Empujar un nuevo jugador al juego que quiere unirse
+          this.games[index].players.push({'id': ip, 'nickname': player, 'cards': this.dealCards()})
+        }
+        console.log(this.games[index])
+        result = this.games[index]
       }
     })
     return result
@@ -73,8 +85,8 @@ class App {
 
   public dealCards(cardsToDeal: number = 7): Array<Card>{
     // Retorna un arreglo de 7 cartas y las quita del maso
-    let randomCardIndex: number;
-    let randomCards: Array<any> = [];
+    let randomCardIndex: number
+    let randomCards: Array<any> = []
     for (let i = 0; i < cardsToDeal; i++){
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
