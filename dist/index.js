@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const App_1 = require("./App");
 const port = process.env.PORT || 3000;
 // Levanta servidor node
-App_1.default.server.listen(port, (err) => {
+App_1.default.server.listen(port, '0.0.0.0', (err) => {
     if (err) {
         console.log(err);
     }

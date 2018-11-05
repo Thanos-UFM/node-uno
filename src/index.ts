@@ -3,7 +3,7 @@ import game from './App'
 const port: any = process.env.PORT || 3000
 
 // Levanta servidor node
-game.server.listen(port, (err) => {
+game.server.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.log(err)
   }
