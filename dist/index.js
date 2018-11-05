@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const App_1 = require("./App");
-let port = 3000;
+let port = 80;
 // Levanta servidor node
 App_1.default.server.listen(port, (err) => {
     if (err) {
