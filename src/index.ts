@@ -27,11 +27,13 @@ game.server.listen(port, '0.0.0.0', (err) => {
     // Recibe el evento startGame
     socket.on('startGame', (data) => {
       console.log("-------GAME STARTED------")
+      console.log(data)
       game.io.emit(data.gameCode, game.playCard(data.gameCode, game.dealCards(1)[0]))      
     })
     
     socket.on('cardPlayed', (data) => {
-
+      console.log(data)
+      game.io.emit(data.gameCode, game.playCard(data.gameCode, data.card, data.player))
     })
 
     socket.on('disconnect', (data) => {

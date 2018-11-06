@@ -13,6 +13,8 @@ class App {
   public games: Array<Game> = []
   public cards: Array<Card> = []
 
+  public usedCards: Array<Card> = []
+
   // Variables privadas  
   private turn: number
 
@@ -91,6 +93,9 @@ class App {
     let randomCardIndex: number
     let randomCards: Array<any> = []
     for (let i = 0; i < cardsToDeal; i++){
+      if (this.cards.length == 0){
+        this.cards == this.usedCards;
+      }
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
       // Empujo la carta con el indice del numero aleatorio
@@ -102,13 +107,27 @@ class App {
     return randomCards
   }
 
-  public playCard(gameCode: string, playedCard: Card): Game{
+  public playCard(gameCode: string, playedCard: Card, nickname: any = false): Game{
     let result: Game;
     this.games.forEach((game, index) => {
       if (game.gameCode == gameCode){
         game.topCard = playedCard
-        game.turn += 1
+        game.turn = (game.turn + 1) % game.players.length
         
+        this.usedCards.push(playedCard)
+        if (nickname){
+          game.players.forEach((player, ind) => {
+            if (player.nickname == nickname){
+              for (let i = 0; i < player.cards.length; i++){
+                if (player.cards[i].color == playedCard.color && player.cards[i].value == playedCard.value){
+                  player.cards.splice(i, 1)
+                  i = player.cards.length
+                }
+              }
+            }            
+          })
+        }
+
         result = game
       }
     })

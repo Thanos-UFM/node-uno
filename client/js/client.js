@@ -42,34 +42,7 @@ function joinGame () {
 
         joined = true
 
-        data.players.forEach((player, ind) => {
-          if (player.nickname === userCode) {
-            player.cards.forEach((card, index) => {
-              let color
-              switch (card.color) {
-                case 0:
-                  color = 'red'
-                  break
-                case 1:
-                  color = 'blue'
-                  break
-                case 2:
-                  color = 'green'
-                  break
-                case 3:
-                  color = 'yellow'
-                  break
-                case 4:
-                  color = 'black'
-                  break
-              }
-              document.getElementById('cards').innerHTML += `
-              <li>
-                <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${card.value}</button>
-              </li>`
-            })
-          }
-        })
+        printCards(data.players)
 
         gameEvents()
       } else if (!data) {
@@ -80,8 +53,41 @@ function joinGame () {
   })
 }
 
+function printCards (players) {
+  document.getElementById('cards').innerHTML = ''
+  players.forEach((player, ind) => {
+    if (player.nickname === userCode) {
+      player.cards.forEach((card, index) => {
+        let color
+        switch (card.color) {
+          case 0:
+            color = 'red'
+            break
+          case 1:
+            color = 'blue'
+            break
+          case 2:
+            color = 'green'
+            break
+          case 3:
+            color = 'yellow'
+            break
+          case 4:
+            color = 'black'
+            break
+        }
+        document.getElementById('cards').innerHTML += `
+        <li>
+          <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${card.value}</button>
+        </li>`
+      })
+    }
+  })
+}
+
 function startGame () {
   game.emit('startGame', { 'gameCode': gameCode })
+  document.getElementById('btn-start-game').disabled = true
 }
 
 function playCard (cardValue, cardColor) {
@@ -91,9 +97,39 @@ function playCard (cardValue, cardColor) {
 }
 
 function gameEvents () {
+  console.log('game events', gameCode)
   game.on(gameCode, (data) => {
     console.log('carta jugada', data)
     const cards = document.getElementsByClassName('card')
+    const topCard = document.getElementsByClassName('top-card')
+
+    let color
+    switch (data.topCard.color) {
+      case 0:
+        color = 'red'
+        break
+      case 1:
+        color = 'blue'
+        break
+      case 2:
+        color = 'green'
+        break
+      case 3:
+        color = 'yellow'
+        break
+      case 4:
+        color = 'black'
+        break
+    }
+
+    for (let i = 0; i < topCard.length; i++) {
+      topCard[i].innerHTML = `
+      <a class="card ${color}">${data.topCard.value}</a>
+      `
+    }
+
+    printCards(data.players)
+
     if (data.players[data.turn].nickname === userCode) {
       for (let i = 0; i < cards.length; i++) {
         cards[i].disabled = false
