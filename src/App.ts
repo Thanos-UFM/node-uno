@@ -52,7 +52,7 @@ class App {
   // Esta funcion crea un nuevo juego
   public createGame(gameCode: string): Array<Game>{
     // Empuja un nuevo juego al arreglo de juegos
-    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0]})
+    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0], 'turn': 0})
     console.log(this.games)
     return this.games
   }
@@ -102,7 +102,7 @@ class App {
     return randomCards
   }
 
-  public playCard(){
+  public playCard(game: Game, playedCard: Card){
     
   }
 }
