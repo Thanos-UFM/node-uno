@@ -54,6 +54,14 @@ function joinGame () {
   })
 }
 
+function fishCard () {
+  game.emit('fishCard', { 'gameCode': gameCode, 'player': userCode })
+
+  game.on('getCard', (data) => {
+    printCards(data.players)
+  })
+}
+
 function printCards (players) {
   document.getElementById('cards').innerHTML = ''
   players.forEach((player, ind) => {
@@ -92,7 +100,7 @@ function startGame () {
 }
 
 function playCard (cardValue, cardColor) {
-  if (cardValue === toPlay.value || cardColor === toPlay.color || cardColor === 4) {
+  if (cardValue === toPlay.value || cardColor === toPlay.color || cardColor === 4 || toPlay.color === 4) {
     const card = { color: cardColor, value: cardValue }
     game.emit('cardPlayed', { 'gameCode': gameCode, 'card': card, 'player': userCode })
   }
@@ -149,3 +157,4 @@ function gameEvents () {
 document.getElementById('btn-create-game').addEventListener('click', createGame)
 document.getElementById('btn-join-game').addEventListener('click', joinGame)
 document.getElementById('btn-start-game').addEventListener('click', startGame)
+document.getElementById('btn-fish-card').addEventListener('click', fishCard)
