@@ -4,6 +4,7 @@ import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
+import { Result } from 'range-parser';
 
 class App {
   // Variables publicas
@@ -12,6 +13,8 @@ class App {
   public io: SocketIO.Server
   public games: Array<Game> = []
   public cards: Array<Card> = []
+
+  public usedCards: Array<Card> = []
 
   // Variables privadas  
   private turn: number
@@ -52,7 +55,7 @@ class App {
   // Esta funcion crea un nuevo juego
   public createGame(gameCode: string): Array<Game>{
     // Empuja un nuevo juego al arreglo de juegos
-    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0]})
+    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0], 'turn': -1})
     console.log(this.games)
     return this.games
   }
@@ -91,6 +94,9 @@ class App {
     let randomCardIndex: number
     let randomCards: Array<any> = []
     for (let i = 0; i < cardsToDeal; i++){
+      if (this.cards.length == 0){
+        this.cards == this.usedCards;
+      }
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
       // Empujo la carta con el indice del numero aleatorio
@@ -102,8 +108,49 @@ class App {
     return randomCards
   }
 
-  public playCard(){
-    
+  public playCard(gameCode: string, playedCard: Card, nickname: any = false): Game{
+    let result: Game;
+    this.games.forEach((game, index) => {
+      if (game.gameCode == gameCode){
+        game.topCard = playedCard
+        game.turn = (game.turn + 1) % game.players.length
+        
+        this.usedCards.push(playedCard)
+        if (nickname){
+          game.players.forEach((player, ind) => {
+            if (player.nickname == nickname){
+              for (let i = 0; i < player.cards.length; i++){
+                if (player.cards[i].color == playedCard.color && player.cards[i].value == playedCard.value){
+                  player.cards.splice(i, 1)
+                  i = player.cards.length
+                }
+              }
+            }            
+          })
+        }
+
+        result = game
+      }
+    })
+    return result
+  }
+
+  fishCard(gameCode: string, player: string): Game{
+    let result: Game;
+    for (let i = 0; i < this.games.length; i++){
+      if (this.games[i].gameCode == gameCode){
+        for (let o = 0; o < this.games[i].players.length; o++){
+          if (this.games[i].players[o].nickname == player){
+            this.games[i].players[o].cards.push(this.dealCards(1)[0])
+            o = this.games[i].players.length
+          }
+        }
+        result = this.games[i]
+        i = this.games.length        
+      }      
+    }
+
+    return result
   }
 }
 

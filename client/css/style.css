@@ -18,7 +18,7 @@ body{
   left: 50%;
   transform: translateY(-65%) translateX(-50%);
   text-align: center;
-  padding: 20px 0 20px 0;  
+  padding: 20px 10px 20px 10px;
   border-radius: 20px;
   box-shadow: 2px 2px 20px 1px rgba(0,0,0,.1), -2px 2px 20px 1px rgba(0,0,0,.1);  
 }
@@ -95,8 +95,15 @@ button:active{
   box-shadow: 0 1px 7px 1px rgba(0,0,0,.1);
 }
 
-button:focus {
+button:focus{
   outline:0;
+}
+
+button:disabled{
+  opacity: .5;
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 input{

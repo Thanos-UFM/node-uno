@@ -28,10 +28,15 @@ game.server.listen(port, '0.0.0.0', (err) => {
     socket.on('startGame', (data) => {
       console.log("-------GAME STARTED------")
       console.log(data)
+      game.io.emit(data.gameCode, game.playCard(data.gameCode, game.dealCards(1)[0]))      
     })
     
     socket.on('cardPlayed', (data) => {
+      game.io.emit(data.gameCode, game.playCard(data.gameCode, data.card, data.player))
+    })
 
+    socket.on('fishCard', (data) => {
+      game.io.emit('getCard', game.fishCard(data.gameCode, data.player))
     })
 
     socket.on('disconnect', (data) => {
