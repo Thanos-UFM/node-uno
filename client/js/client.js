@@ -43,7 +43,7 @@ function joinGame () {
 
         joined = true
 
-        printCards(data.players)
+        printCards(data)
 
         gameEvents()
       } else if (!data) {
@@ -56,15 +56,13 @@ function joinGame () {
 
 function fishCard () {
   game.emit('fishCard', { 'gameCode': gameCode, 'player': userCode })
-
-  game.on('getCard', (data) => {
-    printCards(data.players)
-  })
 }
 
-function printCards (players) {
+function printCards (game) {
+  console.log('print', game)
+  const cards = document.getElementsByClassName('card')
   document.getElementById('cards').innerHTML = ''
-  players.forEach((player, ind) => {
+  game.players.forEach((player, ind) => {
     if (player.nickname === userCode) {
       player.cards.forEach((card, index) => {
         let color
@@ -92,6 +90,18 @@ function printCards (players) {
       })
     }
   })
+
+  if (game.turn > -1) {
+    if (game.players[game.turn].nickname === userCode) {
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].disabled = false
+      }
+    } else {
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].disabled = true
+      }
+    }
+  }
 }
 
 function startGame () {
@@ -110,8 +120,6 @@ function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
     toPlay = data.topCard
-    console.log('carta jugada', data)
-    const cards = document.getElementsByClassName('card')
     const topCard = document.getElementsByClassName('top-card')
 
     let color
@@ -139,17 +147,11 @@ function gameEvents () {
       `
     }
 
-    printCards(data.players)
+    printCards(data)
+  })
 
-    if (data.players[data.turn].nickname === userCode) {
-      for (let i = 0; i < cards.length; i++) {
-        cards[i].disabled = false
-      }
-    } else {
-      for (let i = 0; i < cards.length; i++) {
-        cards[i].disabled = true
-      }
-    }
+  game.on('getCard', (data) => {
+    printCards(data)
   })
 }
 

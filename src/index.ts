@@ -35,6 +35,10 @@ game.server.listen(port, '0.0.0.0', (err) => {
       game.io.emit(data.gameCode, game.playCard(data.gameCode, data.card, data.player))
     })
 
+    socket.on('fishCard', (data) => {
+      game.io.emit('getCard', game.fishCard(data.gameCode, data.player))
+    })
+
     socket.on('disconnect', (data) => {
       console.log(`Cliente desconectado, ${handshake.address}`);
     })

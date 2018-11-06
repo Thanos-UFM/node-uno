@@ -4,6 +4,7 @@ import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
+import { Result } from 'range-parser';
 
 class App {
   // Variables publicas
@@ -131,6 +132,24 @@ class App {
         result = game
       }
     })
+    return result
+  }
+
+  fishCard(gameCode: string, player: string): Game{
+    let result: Game;
+    for (let i = 0; i < this.games.length; i++){
+      if (this.games[i].gameCode == gameCode){
+        for (let o = 0; o < this.games[i].players.length; o++){
+          if (this.games[i].players[o].nickname == player){
+            this.games[i].players[o].cards.push(this.dealCards(1)[0])
+            o = this.games[i].players.length
+          }
+        }
+        result = this.games[i]
+        i = this.games.length        
+      }      
+    }
+
     return result
   }
 }
