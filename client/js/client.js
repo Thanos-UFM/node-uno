@@ -4,7 +4,7 @@ let joined = false
 const game = io()
 
 function createGame () {
-  gameCode = (Math.floor(Math.random() * 2176782335)).toString(36)
+  gameCode = (Math.floor(Math.random() * 1679615)).toString(36)
   // Va a mandar al servidor el evento para crear un nuevo juego con un codigo unico en base 36
   game.emit('createGame', { 'gameCode': gameCode })
   document.getElementById('login').style.display = 'none'
@@ -12,7 +12,7 @@ function createGame () {
   document.getElementById('game').style.display = 'block'
 
   game.on('playerJoined', (data) => {
-    console.log(data)
+    console.log('player joined', data)
     if (data.players.length > 1) {
       document.getElementById('btn-start-game').style.display = 'initial'
     }
@@ -33,7 +33,7 @@ function joinGame () {
   game.emit('joinGame', { 'gameCode': gameCode, 'player': userCode })
 
   game.on('playerJoined', (data) => {
-    console.log(data)
+    console.log('player joined', data)
     if (joined === false) {
       if (data.gameCode === gameCode) {
         document.getElementById('login').style.display = 'none'
@@ -65,11 +65,13 @@ function joinGame () {
               }
               document.getElementById('cards').innerHTML += `
               <li>
-                <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}">${card.value}</button>
+                <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${card.value}</button>
               </li>`
             })
           }
         })
+
+        gameEvents()
       } else if (!data) {
         console.log(data)
         alert('Juego no exite')
@@ -86,6 +88,22 @@ function playCard (cardValue, cardColor) {
   const card = { color: cardColor, value: cardValue }
   console.log('carta jugada', card)
   game.emit('cardPlayed', { 'gameCode': gameCode, 'card': card, 'player': userCode })
+}
+
+function gameEvents () {
+  game.on(gameCode, (data) => {
+    console.log('carta jugada', data)
+    const cards = document.getElementsByClassName('card')
+    if (data.players[data.turn].nickname === userCode) {
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].disabled = false
+      }
+    } else {
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].disabled = true
+      }
+    }
+  })
 }
 
 // Event Listeners
