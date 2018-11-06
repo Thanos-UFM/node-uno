@@ -1,5 +1,6 @@
 let gameCode
 let userCode
+let toPlay
 let joined = false
 const game = io()
 
@@ -91,14 +92,16 @@ function startGame () {
 }
 
 function playCard (cardValue, cardColor) {
-  const card = { color: cardColor, value: cardValue }
-  console.log('carta jugada', card)
-  game.emit('cardPlayed', { 'gameCode': gameCode, 'card': card, 'player': userCode })
+  if (cardValue === toPlay.value || cardColor === toPlay.color || cardColor === 4) {
+    const card = { color: cardColor, value: cardValue }
+    game.emit('cardPlayed', { 'gameCode': gameCode, 'card': card, 'player': userCode })
+  }
 }
 
 function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
+    toPlay = data.topCard
     console.log('carta jugada', data)
     const cards = document.getElementsByClassName('card')
     const topCard = document.getElementsByClassName('top-card')

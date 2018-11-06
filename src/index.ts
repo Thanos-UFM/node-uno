@@ -32,7 +32,6 @@ game.server.listen(port, '0.0.0.0', (err) => {
     })
     
     socket.on('cardPlayed', (data) => {
-      console.log(data)
       game.io.emit(data.gameCode, game.playCard(data.gameCode, data.card, data.player))
     })
 
