@@ -5,4 +5,5 @@ export class Game {
   players: Array<Player>;
   topCard: Card;
   turn: number;
+  deck: Array<Card>
 }

@@ -34,6 +34,7 @@ class App {
   }
 
   fillDeck(): Array<any>{
+    this.cards = []
     // LLenar el deck
     // Llenar cada color
     for (let c = 0; c < 4; c++){
@@ -55,7 +56,7 @@ class App {
   // Esta funcion crea un nuevo juego
   public createGame(gameCode: string): Array<Game>{
     // Empuja un nuevo juego al arreglo de juegos
-    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0], 'turn': -1})
+    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0], 'turn': -1, 'deck': this.fillDeck()})
     console.log(this.games)
     return this.games
   }
