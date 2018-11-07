@@ -4,6 +4,11 @@ let toPlay
 let joined = false
 const game = io()
 
+function mainMenu () {
+  document.getElementById('main').style.display = 'none'
+  document.getElementById('login').style.display = 'block'
+}
+
 function createGame () {
   gameCode = (Math.floor(Math.random() * 1679615)).toString(36)
   // Va a mandar al servidor el evento para crear un nuevo juego con un codigo unico en base 36
@@ -156,6 +161,7 @@ function gameEvents () {
 }
 
 // Event Listeners
+document.getElementById('btn-multi-game').addEventListener('click', mainMenu)
 document.getElementById('btn-create-game').addEventListener('click', createGame)
 document.getElementById('btn-join-game').addEventListener('click', joinGame)
 document.getElementById('btn-start-game').addEventListener('click', startGame)
