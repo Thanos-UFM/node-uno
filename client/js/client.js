@@ -125,7 +125,7 @@ function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
     toPlay = data.topCard
-    const topCard = document.getElementsByClassName('top-card')
+    const topCard = document.getElementsByClassName('top-card').style.display = 'block'
 
     let color
     switch (data.topCard.color) {

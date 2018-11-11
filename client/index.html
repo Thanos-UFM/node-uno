@@ -9,7 +9,7 @@
 </head>
 <body></body>
   <div class="content" id="main" style="display: block;">
-    <p>Elije como será tu partida: </p>
+    <p>Elije como será la partida: </p>
     <button id="btn-single-game">Individual</button>
     <button id="btn-multi-game">Grupal</button>
   </div>
@@ -21,8 +21,8 @@
     <button id="btn-create-game">Crear juego</button>
   </div>
   <div class="content" id="game">
-    <h1 class="top-card"></h1>
-    <h1 id="game-code"></h1>    
+    <h1 id='top-card' class="top-card">hola</h1>
+    <h1 id="game-code"></h1>
     <ul id="players"></ul>
     <button id="btn-start-game">Iniciar juego</button>
   </div>
@@ -32,8 +32,7 @@
     <ul id="cards"></ul>
     <ul id="personal-deck"></ul>
     <button id="btn-fish-card">Pescar carta</button>
-  </div>
-  
+  </div> 
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/client.js"></script>
 </body>
