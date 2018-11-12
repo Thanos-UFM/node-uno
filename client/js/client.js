@@ -16,6 +16,7 @@ function createGame () {
   document.getElementById('login').style.display = 'none'
   document.getElementById('game-code').innerHTML = `Codigo de juego: ${gameCode}`
   document.getElementById('game').style.display = 'block'
+  document.getElementById('game-title').style.display = 'none'
 
   game.on('playerJoined', (data) => {
     console.log('player joined', data)
@@ -112,7 +113,8 @@ function printCards (game) {
 function startGame () {
   game.emit('startGame', { 'gameCode': gameCode })
   document.getElementById('btn-start-game').disabled = true
-  //gameEvents()
+  document.getElementById('game-title').style.display = 'block'
+  gameEvents()
 }
 
 function playCard (cardValue, cardColor) {
@@ -126,7 +128,7 @@ function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
     toPlay = data.topCard
-    const topCard = document.getElementsByClassName('top-card').style.display = 'block'
+    const topCard = document.getElementsByClassName('top-card')
 
     let color
     switch (data.topCard.color) {
