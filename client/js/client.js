@@ -112,6 +112,7 @@ function printCards (game) {
 function startGame () {
   game.emit('startGame', { 'gameCode': gameCode })
   document.getElementById('btn-start-game').disabled = true
+  //gameEvents()
 }
 
 function playCard (cardValue, cardColor) {
