@@ -8,27 +8,33 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body></body>
-  <div class="content" id="login" style="display: block;">    
-    <p>Codigo para unirse a juego: </p>
-    <input type="text" id="input-game-code">
+  <div class="content" id="main" style="display: block;">
+    <p>Elije como será la partida: </p>
+    <button id="btn-single-game">Individual</button>
+    <button id="btn-multi-game">Grupal</button>
+  </div>
+  <div class="content" id="login">
+    <p>Código para unirse a juego: </p>
+    <input type="text" id="input-game-code" placeholder="Código">
     <button id="btn-join-game">Unirse al juego</button>
     <p>o</p>
     <button id="btn-create-game">Crear juego</button>
   </div>
   <div class="content" id="game">
+    <h1 id="game-code"></h1>
+    <h1 id="game-title">Partida</h1>
     <h1 class="top-card"></h1>
-    <h1 id="game-code"></h1>    
     <ul id="players"></ul>
     <button id="btn-start-game">Iniciar juego</button>
   </div>
   <div class="content" id="player">
+    <h2 id="test"></h2>
     <h1 class="top-card"></h1>
     <h2 id="player-id"></h2>
     <ul id="cards"></ul>
     <ul id="personal-deck"></ul>
     <button id="btn-fish-card">Pescar carta</button>
-  </div>
-  
+  </div> 
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/client.js"></script>
 </body>

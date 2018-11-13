@@ -4,6 +4,11 @@ let toPlay
 let joined = false
 const game = io()
 
+function mainMenu () {
+  document.getElementById('main').style.display = 'none'
+  document.getElementById('login').style.display = 'block'
+}
+
 function createGame () {
   gameCode = (Math.floor(Math.random() * 1679615)).toString(36)
   // Va a mandar al servidor el evento para crear un nuevo juego con un codigo unico en base 36
@@ -11,6 +16,7 @@ function createGame () {
   document.getElementById('login').style.display = 'none'
   document.getElementById('game-code').innerHTML = `Codigo de juego: ${gameCode}`
   document.getElementById('game').style.display = 'block'
+  document.getElementById('game-title').style.display = 'none'
 
   game.on('playerJoined', (data) => {
     console.log('player joined', data)
@@ -20,9 +26,20 @@ function createGame () {
     document.getElementById('players').innerHTML = ''
     if (data.gameCode === gameCode) {
       data.players.forEach((item, index) => {
-        document.getElementById('players').innerHTML += `<li>${item.nickname}</li>`
+        document.getElementById('players').innerHTML += `<li>${item.nickname}, <b>(${item.cards.length})</b></li>`
       })
     }
+  })
+
+  game.on(gameCode, (data) => {
+    document.getElementById('players').innerHTML = ''
+    data.players.forEach((item, index) => {
+      if (item.cards.length == 0) {
+        document.getElementById('players').innerHTML += `<li><h1>GANADOR ${item.nickname}</h1></li>`
+      } else {
+        document.getElementById('players').innerHTML += `<li>${item.nickname}, <b>(${item.cards.length})</b></li>`
+      }
+    })
   })
 }
 
@@ -92,13 +109,16 @@ function printCards (game) {
   })
 
   if (game.turn > -1) {
+    document.getElementById('test').innerHTML = `Turno de ${game.players[game.turn].nickname}`
     if (game.players[game.turn].nickname === userCode) {
       for (let i = 0; i < cards.length; i++) {
         cards[i].disabled = false
+        document.getElementById('btn-fish-card').disabled = false
       }
     } else {
       for (let i = 0; i < cards.length; i++) {
         cards[i].disabled = true
+        document.getElementById('btn-fish-card').disabled = true
       }
     }
   }
@@ -107,6 +127,8 @@ function printCards (game) {
 function startGame () {
   game.emit('startGame', { 'gameCode': gameCode })
   document.getElementById('btn-start-game').disabled = true
+  document.getElementById('game-title').style.display = 'block'
+  gameEvents()
 }
 
 function playCard (cardValue, cardColor) {
@@ -119,6 +141,13 @@ function playCard (cardValue, cardColor) {
 function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
+
+    data.players.forEach((item, index) => {
+      if (item.cards.length === 0) {
+        alert(`JUEGO GANADO POR ${item.nickname}`)
+      }
+    })
+
     toPlay = data.topCard
     const topCard = document.getElementsByClassName('top-card')
 
@@ -156,6 +185,7 @@ function gameEvents () {
 }
 
 // Event Listeners
+document.getElementById('btn-multi-game').addEventListener('click', mainMenu)
 document.getElementById('btn-create-game').addEventListener('click', createGame)
 document.getElementById('btn-join-game').addEventListener('click', joinGame)
 document.getElementById('btn-start-game').addEventListener('click', startGame)
