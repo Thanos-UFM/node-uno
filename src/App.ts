@@ -49,6 +49,7 @@ class App {
         this.cards.push(newCard)
       }
     }
+    this.cards.concat(this.cards)
     return this.cards
   }
 
