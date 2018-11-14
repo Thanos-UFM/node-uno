@@ -4,6 +4,5 @@ export class Game {
   gameCode: string;
   players: Array<Player>;
   topCard: Card;
-  turn: number;
-  deck: Array<Card>
+  turn: number
 }

@@ -34,7 +34,6 @@ class App {
   }
 
   fillDeck(): Array<any>{
-    let deck: Array<Card> = []
     // LLenar el deck
     // Llenar cada color
     for (let c = 0; c < 4; c++){
@@ -47,9 +46,8 @@ class App {
           newCard.color = 4
         }
 
-        deck.push(newCard)
+        this.cards.push(newCard)
       }
-      this.cards = deck
     }
     return this.cards
   }
@@ -57,7 +55,7 @@ class App {
   // Esta funcion crea un nuevo juego
   public createGame(gameCode: string): Array<Game>{
     // Empuja un nuevo juego al arreglo de juegos
-    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0], 'turn': -1, 'deck': this.fillDeck()})
+    this.games.push({'gameCode': gameCode, 'players': [], 'topCard': this.dealCards(1)[0], 'turn': -1})
     console.log(this.games)
     return this.games
   }
@@ -97,7 +95,7 @@ class App {
     let randomCards: Array<any> = []
     for (let i = 0; i < cardsToDeal; i++){
       if (this.cards.length == 0){
-        this.cards == this.usedCards;
+        this.fillDeck();
       }
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
