@@ -4,7 +4,7 @@ import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
-import { Result } from 'range-parser';
+//import { Result } from 'range-parser';
 
 class App {
   // Variables publicas
@@ -95,7 +95,7 @@ class App {
     let randomCards: Array<any> = []
     for (let i = 0; i < cardsToDeal; i++){
       if (this.cards.length == 0){
-        this.cards == this.usedCards;
+        this.fillDeck();
       }
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
