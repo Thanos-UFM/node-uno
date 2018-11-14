@@ -1,5 +1,6 @@
 let gameCode
 let userCode
+let PCCode
 let toPlay
 let joined = false
 const game = io()
@@ -209,6 +210,16 @@ function gameEvents () {
   game.on('getCard', (data) => {
     printCards(data)
   })
+}
+
+function individualGame () {
+  gameCode = (Math.floor(Math.random() * 1679615)).toString(36)
+  userCode = (Math.floor(Math.random() * 1679615)).toString(36)
+  PCCode = (Math.floor(Math.random() * 1679615)).toString(36)
+  // Va a mandar al servidor el evento para crear un nuevo juego con un codigo unico en base 36
+  game.emit('createGame', { 'gameCode': gameCode })
+  game.emit('joinGame', { 'gameCode': gameCode, 'player': userCode })
+  game.emit('joinPC', { 'gameCode': gameCode, 'player': PCCode })
 }
 
 function showAlert (title, description) {
