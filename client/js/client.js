@@ -66,7 +66,7 @@ function joinGame () {
         gameEvents()
       } else if (!data) {
         console.log(data)
-        alert('Juego no exite')
+        showAlert('¡Oy! :(', 'No se pudó entrar a la partida. El codigo ingresado no existe.')
       }
     }
   })
@@ -215,10 +215,12 @@ function showAlert (title, description) {
   document.getElementById('alert-wrapper').style.display = 'inherit'
   document.getElementById('alert-title').innerHTML = title
   document.getElementById('alert-description').innerHTML = description
+  document.getElementById('alert-button').focus()
 }
 
 function hideAlert () {
   document.getElementById('alert-wrapper').style.display = 'none'
+  document.getElementById('alert-button').blur()
 }
 
 // Event Listeners
