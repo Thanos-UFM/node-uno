@@ -4,7 +4,7 @@ import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
-import { Result } from 'range-parser';
+//import { Result } from 'range-parser';
 
 class App {
   // Variables publicas
@@ -34,7 +34,7 @@ class App {
   }
 
   fillDeck(): Array<any>{
-    this.cards = []
+    let deck: Array<Card> = []
     // LLenar el deck
     // Llenar cada color
     for (let c = 0; c < 4; c++){
@@ -47,8 +47,9 @@ class App {
           newCard.color = 4
         }
 
-        this.cards.push(newCard)
+        deck.push(newCard)
       }
+      this.cards = deck
     }
     return this.cards
   }
