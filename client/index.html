@@ -34,7 +34,14 @@
     <ul id="cards"></ul>
     <ul id="personal-deck"></ul>
     <button id="btn-fish-card">Pescar carta</button>
-  </div> 
+  </div>  
+  <div id="alert-wrapper">
+    <div id="alert">
+      <h2 id="alert-title"></h2>
+      <p id="alert-description"></p>
+      <button class="button" id="alert-button" onclick="hideAlert()">Okay</button>
+    </div>
+  </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/client.js"></script>
 </body>
