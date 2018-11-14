@@ -108,10 +108,7 @@ function printCards (game) {
             value = '+2'
             break
           case 11:
-            value = '⇄'
-            break
-          case 12:
-            value = 'x'
+            value = '🚫'
             break
           case 14:
             value = '+4'
@@ -168,7 +165,7 @@ function gameEvents () {
     const topCard = document.getElementsByClassName('top-card')
 
     let color
-    switch (data.topCard.color) {
+    switch (toPlay.color) {
       case 0:
         color = 'red'
         break
@@ -186,9 +183,23 @@ function gameEvents () {
         break
     }
 
+    let value
+    value = toPlay.value
+    switch (toPlay.value) {
+      case 10:
+        value = '+2'
+        break
+      case 11:
+        value = '🚫'
+        break
+      case 14:
+        value = '+4'
+        break
+    }
+
     for (let i = 0; i < topCard.length; i++) {
       topCard[i].innerHTML = `
-      <a class="card ${color}">${data.topCard.value}</a>
+      <button class="card ${color}">${value}</button>
       `
     }
 

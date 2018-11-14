@@ -47,13 +47,15 @@ body{
 }
 
 .card{
-  padding: 25px 10px 25px 10px;
+  display: inline-block;
   font-size: large;
   font-family: 'Montserrat Regular', sans-serif;
   border: none;
   font-weight: 800;
-  border-radius: 10px;
+  border-radius: 20px;
   color: white;
+  width: 50px;
+  height: 80px;
 }
 .red{
   background-color: #FF5555;
@@ -72,7 +74,7 @@ body{
 }
 
 .black{
-  background-color: #1a1a1a;
+  background-image: linear-gradient(to bottom right, red,orange,yellow,green,blue,indigo,violet); 
 }
 
 button{
