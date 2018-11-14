@@ -34,8 +34,9 @@ function createGame () {
   game.on(gameCode, (data) => {
     document.getElementById('players').innerHTML = ''
     data.players.forEach((item, index) => {
-      if (item.cards.length == 0) {
-        document.getElementById('players').innerHTML += `<li><h1>GANADOR ${item.nickname}</h1></li>`
+      if (item.cards.length === 0) {
+        showAlert(`¡${item.nickname} ha ganado!`, 'La partida se reiniciara y todos los jugadores tendran 7 cartas otra vez')
+        game.emit('restartGame', { 'gameCode': gameCode })
       } else {
         document.getElementById('players').innerHTML += `<li>${item.nickname}, <b>(${item.cards.length})</b></li>`
       }
@@ -100,9 +101,25 @@ function printCards (game) {
             color = 'black'
             break
         }
+        let value
+        value = card.value
+        switch (card.value) {
+          case 10:
+            value = '+2'
+            break
+          case 11:
+            value = '⇄'
+            break
+          case 12:
+            value = 'x'
+            break
+          case 14:
+            value = '+4'
+            break
+        }
         document.getElementById('cards').innerHTML += `
         <li>
-          <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${card.value}</button>
+          <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${value}</button>
         </li>`
       })
     }
@@ -141,10 +158,9 @@ function playCard (cardValue, cardColor) {
 function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
-
     data.players.forEach((item, index) => {
       if (item.cards.length === 0) {
-        alert(`JUEGO GANADO POR ${item.nickname}`)
+        showAlert(`¡${item.nickname} ha ganado!`, 'La partida se reiniciara y todos los jugadores tendran 7 cartas otra vez')
       }
     })
 
@@ -182,6 +198,16 @@ function gameEvents () {
   game.on('getCard', (data) => {
     printCards(data)
   })
+}
+
+function showAlert (title, description) {
+  document.getElementById('alert-wrapper').style.display = 'inherit'
+  document.getElementById('alert-title').innerHTML = title
+  document.getElementById('alert-description').innerHTML = description
+}
+
+function hideAlert () {
+  document.getElementById('alert-wrapper').style.display = 'none'
 }
 
 // Event Listeners

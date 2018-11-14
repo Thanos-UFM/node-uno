@@ -81,7 +81,7 @@ class App {
           // Empujar un nuevo jugador al juego que quiere unirse          
           this.games[index].players.push({'id': ip, 'nickname': player, 'cards': cards})
         }
-        this.io.emit(player, cards);
+        this.io.emit(player, cards)
         console.log(this.games[index])
         result = this.games[index]
       }
@@ -150,6 +150,22 @@ class App {
       }      
     }
 
+    return result
+  }
+
+  restartGame(gameCode: string){
+    console.log('-----GAME RESTARTED------')
+    console.log({ gameCode: gameCode})
+    let result: Game
+    this.games.forEach((game, index) => {
+      if (game.gameCode === gameCode){
+        game.players.forEach((player, i) => {
+          player.cards = this.dealCards()
+        })
+
+        result = game
+      }
+    })
     return result
   }
 }
