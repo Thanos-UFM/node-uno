@@ -1,5 +1,6 @@
 let gameCode
 let userCode
+let PCCode
 let toPlay
 let joined = false
 const game = io()
@@ -34,8 +35,9 @@ function createGame () {
   game.on(gameCode, (data) => {
     document.getElementById('players').innerHTML = ''
     data.players.forEach((item, index) => {
-      if (item.cards.length == 0) {
-        document.getElementById('players').innerHTML += `<li><h1>GANADOR ${item.nickname}</h1></li>`
+      if (item.cards.length === 0) {
+        showAlert(`¡${item.nickname} ha ganado!`, 'La partida se reiniciara y todos los jugadores tendran 7 cartas otra vez')
+        game.emit('restartGame', { 'gameCode': gameCode })
       } else {
         document.getElementById('players').innerHTML += `<li>${item.nickname}, <b>(${item.cards.length})</b></li>`
       }
@@ -65,7 +67,7 @@ function joinGame () {
         gameEvents()
       } else if (!data) {
         console.log(data)
-        alert('Juego no exite')
+        showAlert('¡Oy! :(', 'No se pudó entrar a la partida. El codigo ingresado no existe.')
       }
     }
   })
@@ -100,9 +102,22 @@ function printCards (game) {
             color = 'black'
             break
         }
+        let value
+        value = card.value
+        switch (card.value) {
+          case 10:
+            value = '+2'
+            break
+          case 11:
+            value = '🚫'
+            break
+          case 14:
+            value = '+4'
+            break
+        }
         document.getElementById('cards').innerHTML += `
         <li>
-          <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${card.value}</button>
+          <button onclick="playCard(${card.value}, ${card.color})" class="card ${color}" disabled>${value}</button>
         </li>`
       })
     }
@@ -141,10 +156,9 @@ function playCard (cardValue, cardColor) {
 function gameEvents () {
   console.log('game events', gameCode)
   game.on(gameCode, (data) => {
-
     data.players.forEach((item, index) => {
       if (item.cards.length === 0) {
-        alert(`JUEGO GANADO POR ${item.nickname}`)
+        showAlert(`¡${item.nickname} ha ganado!`, 'La partida se reiniciara y todos los jugadores tendran 7 cartas otra vez')
       }
     })
 
@@ -152,7 +166,7 @@ function gameEvents () {
     const topCard = document.getElementsByClassName('top-card')
 
     let color
-    switch (data.topCard.color) {
+    switch (toPlay.color) {
       case 0:
         color = 'red'
         break
@@ -170,9 +184,23 @@ function gameEvents () {
         break
     }
 
+    let value
+    value = toPlay.value
+    switch (toPlay.value) {
+      case 10:
+        value = '+2'
+        break
+      case 11:
+        value = '🚫'
+        break
+      case 14:
+        value = '+4'
+        break
+    }
+
     for (let i = 0; i < topCard.length; i++) {
       topCard[i].innerHTML = `
-      <a class="card ${color}">${data.topCard.value}</a>
+      <button class="card ${color}">${value}</button>
       `
     }
 
@@ -182,6 +210,28 @@ function gameEvents () {
   game.on('getCard', (data) => {
     printCards(data)
   })
+}
+
+function individualGame () {
+  gameCode = (Math.floor(Math.random() * 1679615)).toString(36)
+  userCode = (Math.floor(Math.random() * 1679615)).toString(36)
+  PCCode = (Math.floor(Math.random() * 1679615)).toString(36)
+  // Va a mandar al servidor el evento para crear un nuevo juego con un codigo unico en base 36
+  game.emit('createGame', { 'gameCode': gameCode })
+  game.emit('joinGame', { 'gameCode': gameCode, 'player': userCode })
+  game.emit('joinPC', { 'gameCode': gameCode, 'player': PCCode })
+}
+
+function showAlert (title, description) {
+  document.getElementById('alert-wrapper').style.display = 'inherit'
+  document.getElementById('alert-title').innerHTML = title
+  document.getElementById('alert-description').innerHTML = description
+  document.getElementById('alert-button').focus()
+}
+
+function hideAlert () {
+  document.getElementById('alert-wrapper').style.display = 'none'
+  document.getElementById('alert-button').blur()
 }
 
 // Event Listeners

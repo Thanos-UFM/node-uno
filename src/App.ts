@@ -4,7 +4,6 @@ import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
-import { Result } from 'range-parser';
 
 class App {
   // Variables publicas
@@ -38,17 +37,18 @@ class App {
     // Llenar cada color
     for (let c = 0; c < 4; c++){
       // Llenar cada tipo
-      for (let v = 0; v < 14; v++){
+      for (let v = 0; v < 15; v++){
         let newCard: Card = new Card        
         newCard.color = c
         newCard.value = v
-        if (v > 11){
+        if (v > 12){
           newCard.color = 4
         }
 
         this.cards.push(newCard)
       }
     }
+    this.cards.concat(this.cards)
     return this.cards
   }
 
@@ -81,7 +81,7 @@ class App {
           // Empujar un nuevo jugador al juego que quiere unirse          
           this.games[index].players.push({'id': ip, 'nickname': player, 'cards': cards})
         }
-        this.io.emit(player, cards);
+        this.io.emit(player, cards)
         console.log(this.games[index])
         result = this.games[index]
       }
@@ -95,7 +95,7 @@ class App {
     let randomCards: Array<any> = []
     for (let i = 0; i < cardsToDeal; i++){
       if (this.cards.length == 0){
-        this.cards == this.usedCards;
+        this.fillDeck();
       }
       // Va a elegir un numero aleatorio de 0 a la cantidad de cartas que esten en el maso
       randomCardIndex = Math.floor(Math.random()*this.cards.length)
@@ -113,8 +113,21 @@ class App {
     this.games.forEach((game, index) => {
       if (game.gameCode == gameCode){
         game.topCard = playedCard
-        game.turn = (game.turn + 1) % game.players.length
+        let turnMove: number = 1
+        if (game.topCard.value === 11){
+          turnMove = 2
+        }
+        game.turn = (game.turn + turnMove) % game.players.length
         
+        switch (game.topCard.value){
+          case 10:
+            game.players[game.turn].cards = game.players[game.turn].cards.concat(this.dealCards(2))
+            break
+          case 14:
+            game.players[game.turn].cards = game.players[game.turn].cards.concat(this.dealCards(4))
+            break
+        }
+
         this.usedCards.push(playedCard)
         if (nickname){
           game.players.forEach((player, ind) => {
@@ -150,6 +163,22 @@ class App {
       }      
     }
 
+    return result
+  }
+
+  restartGame(gameCode: string){
+    console.log('-----GAME RESTARTED------')
+    console.log({ gameCode: gameCode})
+    let result: Game
+    this.games.forEach((game, index) => {
+      if (game.gameCode === gameCode){
+        game.players.forEach((player, i) => {
+          player.cards = this.dealCards()
+        })
+
+        result = game
+      }
+    })
     return result
   }
 }
