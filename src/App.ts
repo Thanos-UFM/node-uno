@@ -4,7 +4,6 @@ import { Card } from './components/Card'
 import * as express from 'express'
 import * as socketIo from 'socket.io'
 import * as path from 'path'
-//import { Result } from 'range-parser';
 
 class App {
   // Variables publicas
